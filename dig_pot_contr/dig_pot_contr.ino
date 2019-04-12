@@ -118,7 +118,7 @@ void potWrite(uint8_t quad, uint8_t col, uint8_t row, uint8_t s, uint8_t res) {
   digitalWrite(myPins[5 + row], HIGH);
 
   // S/B Logic
-  digitalWrite(S, s);
+  digitalWrite(S, LOW);
 
   // By this point, the CS pin should be selected
   delay(100);
