@@ -6294,7 +6294,7 @@ Standard 0603 ceramic capacitor, and 0.1" leaded capacitor.</description>
 <part name="SUPPLY20" library="scono" deviceset="GND" device=""/>
 <part name="SUPPLY21" library="scono" deviceset="GND" device=""/>
 <part name="SUPPLY22" library="scono" deviceset="GND" device=""/>
-<part name="C4" library="scono" deviceset="CAP" device="0603-CAP" value="1mF"/>
+<part name="C4" library="scono" deviceset="CAP" device="0603-CAP" value="0.1uF"/>
 <part name="SUPPLY23" library="scono" deviceset="GND" device=""/>
 <part name="C3" library="scono" deviceset="UWT0J102MNL1GS" device="" value="1mF"/>
 <part name="SUPPLY24" library="scono" deviceset="GND" device=""/>
