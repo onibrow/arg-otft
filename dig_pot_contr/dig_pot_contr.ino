@@ -12,7 +12,7 @@ const uint8_t RB = 0;
 const uint8_t RC = 4;
 const uint8_t RD = 3;
 const uint8_t RE = 2;
-const uint8_t S  = 12;
+const uint8_t S  = A0;
 uint8_t myPins[] = {Q0, Q1, Q2, Q3, Q4, Q5, RA, RB, RC, RD, RE, S};
 bool DEBUG = false;
 
@@ -26,12 +26,15 @@ void setup() {
   SPI.begin();
   SPI.beginTransaction(SPISettings(100000, MSBFIRST, SPI_MODE3));
 
-  for (int i = 0; i < sizeof(myPins) - 1; i++) {
+  for (int i = 0; i < sizeof(myPins); i++) {
     digitalWrite(myPins[i], HIGH);
     delay(10);
     digitalWrite(myPins[i], LOW);
+    delay(10);
   }
-  delay(100);
+//  digitalWrite(S, HIGH);
+  delay(1000);
+
 }
 
 void loop() {
@@ -48,14 +51,14 @@ void loop() {
 }
 
 void pinSetup() {
-  for (int i = 0; i < sizeof(myPins) - 1; i++) {
+  for (int i = 0; i < sizeof(myPins); i++) {
     pinMode(myPins[i], OUTPUT);
   }
   pinLow();
 }
 
 void pinLow() {
-  for (int i = 0; i < sizeof(myPins) - 1; i++) {
+  for (int i = 0; i < sizeof(myPins); i++) {
     digitalWrite(myPins[i], LOW);
   }
 }
