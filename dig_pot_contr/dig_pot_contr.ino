@@ -12,7 +12,7 @@ const uint8_t RB = 0;
 const uint8_t RC = 4;
 const uint8_t RD = 3;
 const uint8_t RE = 2;
-const uint8_t S  = A0;
+const uint8_t S  = A2;
 uint8_t myPins[] = {Q0, Q1, Q2, Q3, Q4, Q5, RA, RB, RC, RD, RE, S};
 bool DEBUG = false;
 
@@ -25,29 +25,36 @@ void setup() {
   // initialize SPI:
   SPI.begin();
   SPI.beginTransaction(SPISettings(100000, MSBFIRST, SPI_MODE3));
-
-  for (int i = 0; i < sizeof(myPins); i++) {
-    digitalWrite(myPins[i], HIGH);
-    delay(10);
-    digitalWrite(myPins[i], LOW);
-    delay(10);
-  }
-//  digitalWrite(S, HIGH);
-  delay(1000);
-
+  delay(10);
 }
 
 void loop() {
-  potWrite(1, 0, 1, 0, 128);
-  delay(10);
-  potWrite(4, 1, 5, 1, 8);
-  delay(10);
-  potWrite(3, 1, 3, 1, 32);
-  delay(10);
-  potWrite(2, 0, 2, 1, 64);
-  delay(10);
-  potWrite(3, 0, 4, 1, 16);
-  delay(10);
+
+  // Q4 Row 2
+  // B's
+  potWrite(4, 1, 3, 0, 120);
+
+  // S's
+  potWrite(4, 1, 1, 1, 32);
+  potWrite(4, 1, 2, 1, 64);
+  potWrite(4, 1, 3, 1, 96);
+  potWrite(4, 1, 4, 1, 128);
+  potWrite(4, 1, 5, 1, 160);
+
+  // Q4 Row 1
+  // B's
+  potWrite(4, 0, 1, 0, 128);
+  potWrite(4, 0, 2, 0, 128);
+  potWrite(4, 0, 3, 0, 128);
+  potWrite(4, 0, 4, 0, 128);
+  potWrite(4, 0, 5, 0, 128);
+  // S's
+  potWrite(4, 0, 1, 1, 160);
+  potWrite(4, 0, 2, 1, 128);
+  potWrite(4, 0, 3, 1, 96);
+  potWrite(4, 0, 4, 1, 64);
+  potWrite(4, 0, 5, 1, 32);
+
 }
 
 void pinSetup() {
@@ -78,7 +85,7 @@ void potWrite(uint8_t quad, uint8_t col, uint8_t row, uint8_t s, uint8_t res) {
      quad  | Quadrant number | {1,2,3,4}
      col   | Column number   | {1, 2} -> {0,1}
      row   | Row number      | {A,B,C,D,E} -> {1,2,3,4,5}
-     s     | Cell Select     | {S,B} -> {0,1}
+     s     | Cell Select     | {B,S} -> {0,1}
      res   | 8bit Resistance | {0, ..., 255}
   */
   if (DEBUG) {
@@ -117,11 +124,13 @@ void potWrite(uint8_t quad, uint8_t col, uint8_t row, uint8_t s, uint8_t res) {
       break;
   }
 
+  // S/B Logic
+  if (s == 1) {
+    digitalWrite(S, HIGH);
+  }
+
   // Row Logic
   digitalWrite(myPins[5 + row], HIGH);
-
-  // S/B Logic
-  digitalWrite(S, LOW);
 
   // By this point, the CS pin should be selected
   delay(100);
