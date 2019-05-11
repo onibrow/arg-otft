@@ -166,14 +166,19 @@ void potWrite(uint8_t quad, uint8_t col, uint8_t row, uint8_t s, uint8_t res) {
     default:
       break;
   }
+
+  // S/B Logic
+  if (s == 1) {
+    digitalWrite(S, HIGH);
+  }
+
   // Row Logic
   digitalWrite(myPins[5 + row], HIGH);
-  // S/B Logic
-  digitalWrite(S, s);
+
   // By this point, the CS pin should be selected
-  delay(10);
+  delay(100);
   // Send address and value
   SPI.transfer(res);
-  delay(10);
+  delay(100);
   pinLow();
 }
